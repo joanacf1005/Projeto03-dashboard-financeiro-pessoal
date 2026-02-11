@@ -43,7 +43,7 @@ function renderizarTransacoes() {
             '<span>' + transacao.descricao + '</span>' +
             '<span>' + transacao.categoria + '</span>' +
             '<span>' + new Date(transacao.data).toLocaleDateString() + '</span>' +
-            '<span>' + transacao.quantidade + '</span>';
+            '<span>' + transacao.quantidade + " €" + '</span>';
 
         listaTransacoes.appendChild(transacaoListItem); //pega no <li> listaTransacoes e adiciona dentro da <ul> lista-transacoes. 
     });
