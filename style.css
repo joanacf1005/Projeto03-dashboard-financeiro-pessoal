@@ -258,7 +258,7 @@ body {
     font-size: 12px;
 }
 
-.form-container input, .form-container select {
+.form-container input, .form-container select, .description-form input {
     padding: 8px;
     border: 1px solid var(--card-borders);
     border-radius: 4px;
@@ -285,6 +285,21 @@ body {
     gap: 8px;
     flex: 1;
     min-width: 0;
+}
+
+#tipo-transacao {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--card-borders);
+    color: var(--accent-color); 
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+#tipo-transacao option {
+    color: var(--secondary-color); 
+    background-color: var(--card-background); 
 }
 
 .categoria-container {
@@ -318,6 +333,13 @@ body {
     cursor: pointer;
     margin-top: 12px;
 }
+.nova-transacao-icon{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    cursor: pointer;
+}
+    
 
 .btn-container {
     display: flex;
