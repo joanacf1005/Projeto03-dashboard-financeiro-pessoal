@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,7 +67,7 @@
             <div class="nova-transacao">
                 <div class="titulo-nova-transacao-container">
                     <p class="titulo-nova-transacao">Nova Transação</p>
-                    <div class="nova-transacao-icon">+</div>                   
+                    <button class="nova-transacao-icon">+</button>                   
                 </div>
                 <div class="form-container">
                     <div class="description-form">
@@ -83,6 +83,7 @@
                         <div class="tipo-transacao-container">
                             <label for="tipo-transacao">Tipo</label>
                             <select name="tipo-transacao" id="tipo-transacao">
+                                <option value="" selected disabled></option>
                                 <option value="receita">Receita</option>
                                 <option value="despesa">Despesa</option>
                             </select>

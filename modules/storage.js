@@ -1,7 +1,19 @@
 //✔ para saber que já fiz 
 // ✖ para saber que ainda falta
 // OBJETIVO:
-// Salvar ✖ e recuperar ✖ as transações no localStorage. 
+// Salvar e recuperar as transações no localStorage. ✔ 
+
+// Salvar transações no localStorage ✔ 
+export function salvarTransacoes(transacoes) { //Cria uma função exportada que recebe o array transacoes
+    localStorage.setItem("transacoes", JSON.stringify(transacoes)); //guarda na key transacoes e converte o array para string
+}
+
+//Carregar transações do localStorage  ✔ 
+export function carregarTransacoes() { //Cria uma função exportada vai carregar os dados guardados no array transacoes
+    const data = localStorage.getItem("transacoes"); //Vai buscar ao localStorage o que está guardado na key transacoes
+    return data ? JSON.parse(data) : []; // devolve o JSON se existir, senão devolve vazio
+}
+
 
 // PENSAMENTO:
 
