@@ -125,13 +125,46 @@
 
                     <ul class="lista-transacoes"></ul>
 
-
-                    <div class="rodape-tabela">
+                    <!-- <div class="rodape-tabela">
                         <a href="#" class="link-extrato">VER EXTRATO COMPLETO &rarr;</a>
-                    </div>
+                    </div> -->
 
                 </div>
             </article>
+        
+            <div class="popup-transacao" id="popup-transacao" style="display: none;">
+                <div class="popup-content">
+                    <h3>Editar Transação</h3>
+
+                    <label>Descrição:</label>
+                    <input type="text" id="popup-descricao">
+
+                    <label>Valor:</label>
+                    <input type="number" id="popup-quantidade">
+
+                    <label for="popup-categoria">Categoria:</label>
+                        <select id="popup-categoria">
+                            <option value="Comida">Comida</option>
+                            <option value="Faturas">Faturas</option>
+                            <option value="Salário">Salário</option>
+                            <option value="Entretenimento">Entretenimento</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+
+                    <label>Tipo:</label>
+                        <select id="popup-tipo">
+                            <option value="receita">Receita</option>
+                            <option value="despesa">Despesa</option>
+                        </select>
+
+                    <button id="salvar-popup">Guardar</button>
+                    <button id="fechar-popup">Sair</button>
+                </div>
+            </div>
+
+            </div>
+
         </section>
     </main>
     <footer class="footer">
