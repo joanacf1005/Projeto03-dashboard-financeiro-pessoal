@@ -9,31 +9,75 @@ export function inicializarPopUp(transacoes, renderizarTransacoes, atualizarDado
     const btnSalvar = document.getElementById("salvar-popup");
     const btnFechar = document.getElementById("fechar-popup");
 
-    function abrirPopUp(transacao,index){
+    function abrirPopUp(transacao, index) {
         popup.style.display = "flex";
 
-            popupDescricao.value = transacao.descricao;
-            popupQuantidade.value = transacao.quantidade;
-            popupCategoria.value = transacao.categoria;
-            popupTipo.value = transacao.tipo;
+        // Preencher campos com os valores da transação
+        popupDescricao.value = transacao.descricao;
+        popupQuantidade.value = transacao.quantidade;
+        popupCategoria.value = transacao.categoria;
+        popupTipo.value = transacao.tipo;
 
-            btnSalvar.onclick = () => {
-                transacoes[index].descricao = popupDescricao.value;
-                transacoes[index].quantidade = Number(popupQuantidade.value);
-                transacoes[index].categoria = popupCategoria.value;
+        btnSalvar.onclick = () => {
+            const descricao = popupDescricao.value.trim();
+            const quantidade = Number(popupQuantidade.value);
+            const categoria = popupCategoria.value.trim();
+            const tipo = popupTipo.value;
 
-                renderizarTransacoes();
-                atualizarDados();
+            // Validações
+            if (!descricao || descricao.length < 3) {
+                alert("Escreva de novo, com mínimo 3 letras!");
+                return;
+            }
 
-                popup.style.display = "none";
-            };
+            if (isNaN(quantidade) || quantidade <= 0) {
+                alert("Insira um número positivo, maior que zero!");
+                return;
+            }
 
-            btnFechar.onclick = () => {
-                popup.style.display = "none";
-            };
+            if (!tipo) {
+                alert("Selecione um tipo de transação!");
+                return;
+            }
+            if (!categoria) {
+                alert("Escolha uma categoria!");
+                return;
+            }
+
+            // Validação das categorias de acordo com o tipo
+            if (tipo === "receita") {
+                const categoriasPermitidas = ["Salário", "Outros"];
+                if (!categoriasPermitidas.includes(categoria)) {
+                    alert("Para uma receita, apenas 'Salário' ou 'Outros' são permitidos como categoria!");
+                    return;
+                }
+            }
+            if (tipo === "despesa") {
+                const categoriasPermitidas = ["Entretenimento", "Comida", "Faturas", "Lazer", "Outros"];
+                if (!categoriasPermitidas.includes(categoria)) {
+                    alert("Para uma despesa, apenas 'Entretenimento', 'Comida', 'Faturas', 'Lazer' ou 'Outros' são permitidos como categoria!");
+                    return;
+                }
+            }
+
+            // Salvar alterações na transação
+            transacoes[index].descricao = descricao;
+            transacoes[index].quantidade = quantidade;
+            transacoes[index].categoria = categoria;
+            transacoes[index].tipo = tipo;
+
+            // Atualizar lista e dados
+            renderizarTransacoes();
+            atualizarDados();
+
+            // Fechar popup
+            popup.style.display = "none";
+        };
+
+        btnFechar.onclick = () => {
+            popup.style.display = "none";
+        };
     }
+
     return abrirPopUp;
 }
-
-
-    

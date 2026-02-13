@@ -5,7 +5,6 @@ import { carregarTransacoes, salvarTransacoes } from './modules/storage.js';
 import { calcularReceitas, calcularDespesas, calcularSaldoTotal, mostrarReceitas, mostrarDespesas, mostrarSaldoTotal } from './modules/transactions.js';
 import { inicializarPopUp } from './modules/editTransacao.js';
 
-
 // 1) Capturar inputs do formulário ✔
 const tipoTransacaoValue = document.getElementById("tipo-transacao");
 
@@ -56,7 +55,7 @@ function renderizarTransacoes() {
             '<span>' + transacao.quantidade + " €" + '</span>';
 
         const botaoApagar = document.createElement("button");
-        botaoApagar.textContent = "X";
+        botaoApagar.textContent = "x";
         botaoApagar.classList.add("botao-apagar");
 
     
