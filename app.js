@@ -3,7 +3,7 @@
 
 import { carregarTransacoes, salvarTransacoes } from './modules/storage.js';
 import { calcularReceitas, calcularDespesas, calcularSaldoTotal, mostrarReceitas, mostrarDespesas, mostrarSaldoTotal } from './modules/transactions.js';
-
+import { inicializarPopUp } from './modules/editTransacao.js';
 
 
 // 1) Capturar inputs do formulário ✔
@@ -34,6 +34,12 @@ const listaTransacoes = document.querySelector(".lista-transacoes");
 let transacoes = carregarTransacoes();
 console.log("Transações carregadas:", transacoes);
 
+const abrirPopUp = inicializarPopUp(
+    transacoes,
+    renderizarTransacoes,
+    atualizarDados
+);
+
 //função para re-renderizar a lista com botão para apagar
 function renderizarTransacoes() {
     listaTransacoes.innerHTML = "";
@@ -53,16 +59,25 @@ function renderizarTransacoes() {
         botaoApagar.textContent = "X";
         botaoApagar.classList.add("botao-apagar");
 
-        botaoApagar.addEventListener("click", () => {
+    
+        botaoApagar.addEventListener("click", (event) => {
+            event.stopPropagation(); 
+
             transacoes.splice(index, 1);
             salvarTransacoes(transacoes);
             atualizarDados();
+        });
+
+        transacaoListItem.addEventListener("click", () => {
+            abrirPopUp(transacao, index);
+            console.log("pop-up abrir")
         });
 
         transacaoListItem.appendChild(botaoApagar);
         listaTransacoes.appendChild(transacaoListItem);
     });
 }
+
 
 // Renderiza transações guardadas ao iniciar
 renderizarTransacoes();
@@ -100,6 +115,22 @@ function adicionarTransacao(){
     if(categoriaValue == ""){
         alert("Escolha uma categoria!");
         return;
+    }
+
+    if (tipoTransacaoSelecionado === "receita") {
+        const categoriasPermitidas = ["Salário", "Outros"];
+        if (!categoriasPermitidas.includes(categoriaValue)) {
+            alert("Para uma receita, apenas 'Salário' ou 'Outros' são permitidos como categoria!");
+            return; 
+        }
+    }
+
+    if (tipoTransacaoSelecionado === "despesa") {
+        const categoriasPermitidas = ["Entretenimento", "Comida", "Faturas", "Lazer", "Outros"];
+        if (!categoriasPermitidas.includes(categoriaValue)){
+            alert("Para uma despesa, apenas 'Entretenimento', 'Comida', 'Faturas', 'Lazer' ou 'Outros' são permitidos como categoria!");
+            return;
+        }
     }
 
     console.log({
