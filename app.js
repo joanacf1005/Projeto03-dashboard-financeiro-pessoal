@@ -2,12 +2,15 @@
 // ✖ para saber que ainda falta
 
 import { carregarTransacoes, salvarTransacoes } from './modules/storage.js';
+import { calcularReceitas, calcularDespesas, calcularSaldoTotal, mostrarReceitas, mostrarDespesas, mostrarSaldoTotal } from './modules/transactions.js';
+
+
 
 // 1) Capturar inputs do formulário ✔
 const tipoTransacaoValue = document.getElementById("tipo-transacao");
 
 tipoTransacaoValue.addEventListener("change", () => {
-    console.log(tipoTransacaoValue.value); //ver o valor selecionado na consola
+    console.log(tipoTransacaoValue.value);
 });
 
 const categoriaBotao = document.querySelectorAll(".categorias");
@@ -17,11 +20,11 @@ let categoriaSelecionada = "";
 
 categoriaBotao.forEach(botao => {
     botao.addEventListener("click", () => {
-        categoriaBotao.forEach(b => b.classList.remove("ativa")); // remove o valor anterior no inputhidden
-        botao.classList.add("ativa"); // marca o botao como ativo
-        categoriaSelecionada = botao.dataset.value; // guarda o valor
-        inputHidden.value = categoriaSelecionada; // colocar no input hidden a categoria selecionada
-        console.log("Categoria selecionada:", categoriaSelecionada); //ver a categoria selecionada na consola
+        categoriaBotao.forEach(b => b.classList.remove("ativa"));
+        botao.classList.add("ativa");
+        categoriaSelecionada = botao.dataset.value;
+        inputHidden.value = categoriaSelecionada;
+        console.log("Categoria selecionada:", categoriaSelecionada);
     })
 })
 
@@ -31,11 +34,12 @@ const listaTransacoes = document.querySelector(".lista-transacoes");
 let transacoes = carregarTransacoes();
 console.log("Transações carregadas:", transacoes);
 
-//função para re-renderizar a lista
+//função para re-renderizar a lista com botão para apagar
 function renderizarTransacoes() {
-    listaTransacoes.innerHTML = ""; // limpa a lista antes de renderizar
+    listaTransacoes.innerHTML = "";
 
-    transacoes.forEach(transacao => {
+    transacoes.forEach((transacao, index) => {
+
         const transacaoListItem = document.createElement("li");
         transacaoListItem.classList.add("transacao-Item");
 
@@ -43,9 +47,20 @@ function renderizarTransacoes() {
             '<span>' + transacao.descricao + '</span>' +
             '<span>' + transacao.categoria + '</span>' +
             '<span>' + new Date(transacao.data).toLocaleDateString() + '</span>' +
-            '<span>' + transacao.quantidade + '</span>';
+            '<span>' + transacao.quantidade + " €" + '</span>';
 
-        listaTransacoes.appendChild(transacaoListItem); //pega no <li> listaTransacoes e adiciona dentro da <ul> lista-transacoes. 
+        const botaoApagar = document.createElement("button");
+        botaoApagar.textContent = "X";
+        botaoApagar.classList.add("botao-apagar");
+
+        botaoApagar.addEventListener("click", () => {
+            transacoes.splice(index, 1);
+            salvarTransacoes(transacoes);
+            atualizarDados();
+        });
+
+        transacaoListItem.appendChild(botaoApagar);
+        listaTransacoes.appendChild(transacaoListItem);
     });
 }
 
@@ -54,9 +69,8 @@ renderizarTransacoes();
 
 //função para adicionar transação ✔
 function adicionarTransacao(){
-    //descrição 
     let descricaoValue = document.getElementById("descricao").value;
-    //validações // 3) Validar dados. ✔
+
     if (descricaoValue.length < 3) {
         alert("Escreva de novo, com mínimo 3 letras!");
         return;
@@ -66,32 +80,28 @@ function adicionarTransacao(){
         return;
     }
 
-    //valor 
     let quantidadeValue = document.getElementById("quantidade").value;
-    quantidadeValue = Number(quantidadeValue); // converte
-    //validações // 3) Validar dados. ✔
+    quantidadeValue = Number(quantidadeValue);
+
     if(quantidadeValue <= 0 || isNaN(quantidadeValue)){
         alert("Insira um número positivo, maior que zero!");
         return;            
     }
 
-    //tipo
     const tipoTransacaoSelecionado = tipoTransacaoValue.value;
-    //validações // 3) Validar dados. ✔
+
     if(tipoTransacaoSelecionado == ""){
         alert("Selecione um tipo de transação!");
         return;
     }
 
-    //categoria
     const categoriaValue = inputHidden.value;
-    //validações // 3) Validar dados. ✔
+
     if(categoriaValue == ""){
         alert("Escolha uma categoria!");
         return;
     }
 
-    //console.log para os inputs:
     console.log({
         descricao: descricaoValue,
         quantidade: quantidadeValue,
@@ -99,7 +109,6 @@ function adicionarTransacao(){
         categoria: categoriaValue
     });
 
-    // 4) Criar objeto transação. ✔ 
     const transacao = {
         descricao: descricaoValue,              
         quantidade: quantidadeValue,    
@@ -108,17 +117,12 @@ function adicionarTransacao(){
         data: new Date()                        
     };
 
-    // 5) Atualizar estado ✔ 
     transacoes.push(transacao);
     console.log("Transações:", transacoes); 
 
-    //Salvar no localStorage ✔ 
     salvarTransacoes(transacoes);
-
-    // 6) Re-renderizar UI ✔
     renderizarTransacoes();
 
-    // 7) Limpar formulário. ✔
     document.getElementById("descricao").value = "";
     document.getElementById("quantidade").value = "";
     tipoTransacaoValue.value = "";
@@ -126,6 +130,8 @@ function adicionarTransacao(){
     categoriaBotao.forEach(botao => {
         botao.classList.remove("ativa");
     });
+
+    atualizarDados();
 }
 
 // 2) Escutar clique do botão ✔
@@ -139,5 +145,18 @@ adicionaTransacaoIcon.addEventListener("click", () => {
     adicionarTransacao();
 });
 
+//função que mostra e atualiza o saldo total, o total de receitas e o total de despesas
 
+function atualizarDados(){
+    renderizarTransacoes();
 
+    calcularReceitas();
+    calcularDespesas();
+    calcularSaldoTotal();
+
+    mostrarReceitas();
+    mostrarDespesas();
+    mostrarSaldoTotal();
+}
+
+atualizarDados();

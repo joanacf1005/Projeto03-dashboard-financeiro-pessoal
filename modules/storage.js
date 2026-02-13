@@ -19,12 +19,12 @@ export function carregarTransacoes() { //Cria uma função exportada vai carrega
 
 // 1) Precisamos definir uma chave fixa para armazenar os dados.✖
 // 2) Quando salvar:
-//    - Converter array de objetos para JSON.✖
-//    - Usar localStorage.setItem().✖
+//    - Converter array de objetos para JSON.✔
+//    - Usar localStorage.setItem().✔
 // 3) Quando carregar:
-//    - Buscar com localStorage.getItem().✖
-//    - Se existir, converter de volta com JSON.parse().✖
-//    - Se não existir, retornar array vazio.✖
+//    - Buscar com localStorage.getItem().✔
+//    - Se existir, converter de volta com JSON.parse().✔
+//    - Se não existir, retornar array vazio.✔
 
 // PERGUNTAS PARA VOCÊ:
 // - O que acontece se não existir nada salvo?

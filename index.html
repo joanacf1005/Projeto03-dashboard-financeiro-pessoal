@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="module" src="app.js"></script>
+    <script type="module" src="./app.js"></script>
+    <script type="module" src="./modules/transactions.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <title>Dashboard Financeiro Pessoal</title>
 </head>
@@ -48,18 +49,18 @@
             <div class="cards-container">
                 <div class="card">
                     <div class="titulo-card">Balanço Total</div>
-                    <div class="valor">$ 50.865,00</div>
-                    <div class="informacao">+ 2.4% em relação ao mês anterior</div>
+                    <div class="balanco-total"></div>
+                    <!-- <div class="informacao">+ 2.4% em relação ao mês anterior</div> -->
                 </div>
                 <div class="card">
                     <div class="titulo-card">Renda Total</div>
-                    <div class="valor">$ 44.678,59</div>
-                    <div class="informacao">+ 12 Novas fontes</div>
+                    <div class="receita-valor"></div>
+                    <!-- <div class="informacao">+ 12 Novas fontes</div> -->
                 </div>
                 <div class="card">
                     <div class="titulo-card">Total de Despesas</div>
-                    <div class="valor expense-color">$ 6.186,41</div>
-                    <div class="informacao expense-color">- 5% redução</div>
+                    <div class="despesas-valor"></div>
+                    <!-- <div class="informacao expense-color">- 5% redução</div> -->
                 </div>
             </div>
         </section>
