@@ -48,6 +48,31 @@ body {
 /* DEFININDO CADA ÁREA */
 /* ========================= */
 
+.hamburger {
+    display: none;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    cursor: pointer;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    z-index: 1500;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+
 .sidebar {
     grid-area: sidebar;
     background-color: var(--tertiary-color);
@@ -645,4 +670,93 @@ body {
     font-weight: 500;
     padding: 15px;
     text-align: center;
+}
+
+
+/* Responsivo mobile: */
+
+/* ========================= */
+/* RESPONSIVO - MOBILE */
+/* ========================= */
+@media (max-width: 1300px) {
+
+    
+    body {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 220px;
+        height: 100%;
+        z-index: 2000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    
+    .main {
+        padding: 20px;
+    }
+    
+    .transacoes {
+        grid-template-columns: 1fr;
+    }
+
+   
+    .qtd-tipo-transacao-container {
+        flex-direction: column;
+    }
+
+    .cabecalho-tabela {
+        grid-template-columns: 0.8fr 0.8fr 0.8fr 0.8fr;
+        font-size: 10px;
+        gap: 2%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .transacao-Item {
+        grid-template-columns: 0.8fr 0.8fr 0.8fr 0.8fr 0.1fr;
+        padding: 10px;
+        font-size: 12px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .valor-transacao {
+        text-align: left;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
 }

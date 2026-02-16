@@ -190,3 +190,27 @@ function atualizarDados(){
 }
 
 atualizarDados();
+
+//menu hamburger
+
+const hamburger = document.getElementById("hamburger");
+const sidebar = document.querySelector(".sidebar");
+const overlay = document.getElementById("overlay");
+
+function toggleMenu() {
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
+}
+
+function fecharMenu() {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+}
+
+hamburger.addEventListener("click", toggleMenu);
+overlay.addEventListener("click", fecharMenu); //fecha ao clicar no overlay (fora do sidebar)
+
+// Fecha ao clicar num item do menu
+document.querySelectorAll(".menu-itens").forEach(item => {
+    item.addEventListener("click", fecharMenu);
+});
